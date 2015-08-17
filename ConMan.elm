@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 
 main =
-  view
+  view initialModel
 
 
 -- MODEL
@@ -16,35 +16,37 @@ newContact name email phone =
   }
 
 
+initialModel =
+  { contacts =
+      [ newContact "Bobby Tables" "bobby@example.com"    "01 234 5678",
+        newContact "Molly Apples" "molly@example.com"    "01 789 2340",
+        newContact "Elroy Bacon"  "el_bacon@example.com" "01 398 7654"
+      ]
+  }
+
+
 -- VIEW
 
-view =
+view model =
   div [ class "container" ]
-  [
-    h1 [ ] [ text "Conman" ],
-    contactList
+  [ h1 [ ] [ text "Conman" ],
+    contactList model.contacts
   ]
 
 
-contactList =
-  ul [ class "contact-list" ]
-  [ contact (newContact "Bobby Tables" "bobby@example.com"    "01 234 5678"),
-    contact (newContact "Molly Apples" "molly@example.com"    "01 789 2340"),
-    contact (newContact "Elroy Bacon"  "el_bacon@example.com" "01 398 7654")
-  ]
+contactList contacts =
+  ul [ class "contact-list" ] (List.map contactListItem contacts)
 
 
-contact contact =
-  li [ class "contact-list__contact" ] [
-    h2 [ class "contact-list__contact__name" ] [ text contact.name ],
+contactListItem contact =
+  li [ class "contact-list__contact" ]
+  [ h2 [ class "contact-list__contact__name" ] [ text contact.name ],
     div [ class "contact-list__contact__email" ]
-    [
-      label [ ] [ text "Email:" ],
+    [ span [ ] [ text "Email:" ],
       a [ href ("mailto:" ++ contact.email) ] [ text contact.email ]
     ],
     div [ class "contact-list__contact__phone" ]
-    [
-      label [ ] [ text "Phone:" ],
+    [ span [ ] [ text "Phone:" ],
       a [ href ("tel:" ++ contact.phone) ] [ text contact.phone ]
     ]
   ]

@@ -803,7 +803,7 @@ Elm.ConMan.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
-   var contact = function (contact) {
+   var contactListItem = function (contact) {
       return A2($Html.li,
       _L.fromArray([$Html$Attributes.$class("contact-list__contact")]),
       _L.fromArray([A2($Html.h2,
@@ -811,7 +811,7 @@ Elm.ConMan.make = function (_elm) {
                    _L.fromArray([$Html.text(contact.name)]))
                    ,A2($Html.div,
                    _L.fromArray([$Html$Attributes.$class("contact-list__contact__email")]),
-                   _L.fromArray([A2($Html.label,
+                   _L.fromArray([A2($Html.span,
                                 _L.fromArray([]),
                                 _L.fromArray([$Html.text("Email:")]))
                                 ,A2($Html.a,
@@ -821,7 +821,7 @@ Elm.ConMan.make = function (_elm) {
                                 _L.fromArray([$Html.text(contact.email)]))]))
                    ,A2($Html.div,
                    _L.fromArray([$Html$Attributes.$class("contact-list__contact__phone")]),
-                   _L.fromArray([A2($Html.label,
+                   _L.fromArray([A2($Html.span,
                                 _L.fromArray([]),
                                 _L.fromArray([$Html.text("Phone:")]))
                                 ,A2($Html.a,
@@ -829,6 +829,21 @@ Elm.ConMan.make = function (_elm) {
                                 "tel:",
                                 contact.phone))]),
                                 _L.fromArray([$Html.text(contact.phone)]))]))]));
+   };
+   var contactList = function (contacts) {
+      return A2($Html.ul,
+      _L.fromArray([$Html$Attributes.$class("contact-list")]),
+      A2($List.map,
+      contactListItem,
+      contacts));
+   };
+   var view = function (model) {
+      return A2($Html.div,
+      _L.fromArray([$Html$Attributes.$class("container")]),
+      _L.fromArray([A2($Html.h1,
+                   _L.fromArray([]),
+                   _L.fromArray([$Html.text("Conman")]))
+                   ,contactList(model.contacts)]));
    };
    var newContact = F3(function (name,
    email,
@@ -838,33 +853,27 @@ Elm.ConMan.make = function (_elm) {
              ,name: name
              ,phone: phone};
    });
-   var contactList = A2($Html.ul,
-   _L.fromArray([$Html$Attributes.$class("contact-list")]),
-   _L.fromArray([contact(A3(newContact,
-                "Bobby Tables",
-                "bobby@example.com",
-                "01 234 5678"))
-                ,contact(A3(newContact,
-                "Molly Apples",
-                "molly@example.com",
-                "01 789 2340"))
-                ,contact(A3(newContact,
-                "Elroy Bacon",
-                "el_bacon@example.com",
-                "01 398 7654"))]));
-   var view = A2($Html.div,
-   _L.fromArray([$Html$Attributes.$class("container")]),
-   _L.fromArray([A2($Html.h1,
-                _L.fromArray([]),
-                _L.fromArray([$Html.text("Conman")]))
-                ,contactList]));
-   var main = view;
+   var initialModel = {_: {}
+                      ,contacts: _L.fromArray([A3(newContact,
+                                              "Bobby Tables",
+                                              "bobby@example.com",
+                                              "01 234 5678")
+                                              ,A3(newContact,
+                                              "Molly Apples",
+                                              "molly@example.com",
+                                              "01 789 2340")
+                                              ,A3(newContact,
+                                              "Elroy Bacon",
+                                              "el_bacon@example.com",
+                                              "01 398 7654")])};
+   var main = view(initialModel);
    _elm.ConMan.values = {_op: _op
                         ,main: main
                         ,newContact: newContact
+                        ,initialModel: initialModel
                         ,view: view
                         ,contactList: contactList
-                        ,contact: contact};
+                        ,contactListItem: contactListItem};
    return _elm.ConMan.values;
 };
 Elm.Debug = Elm.Debug || {};

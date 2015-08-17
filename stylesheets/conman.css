@@ -41,7 +41,7 @@ h2 {
   text-align: right;
 }
 
-label {
+.contact-list__contact__email span, .contact-list__contact__phone span {
   font-weight: bold;
   margin-right: 0.4em;
 }
@@ -55,40 +55,3 @@ a:hover, a:focus {
   padding-bottom: 0.2em;
   border-bottom: 2px solid darkslategray;
 }
-
-/*
-.contact-list, .new-contact {
-  position: relative;
-  margin: 0;
-  padding: 10px;
-}
-
-.new-contact input {
-  display: inline-block;
-  padding: 10px;
-  font-size: 1.2em;
-}
-
-.new-contact__name {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.new-contact__email, .new-contact__phone {
-  width: 290px;
-  margin-right: 10px;
-}
-
-.new-contact button {
-  padding: 10px;
-  font-size: 1.2em;
-  background-color: darkturquoise;
-  border: none;
-  width: 100px;
-}
-
-
-
-
-
-

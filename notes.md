@@ -330,3 +330,38 @@
           ]
         ]
       ```
+
+
+## 6. Making an initial model
+
+  1. Rather than generate the initial state of the application in the View, we should really be doing that in the Model instead.
+  2. Let's start by creating an `initialModel` function (this name is a convention) and having it return a record that contains our list of contacts
+
+    ```elm
+    initialModel =
+      { contacts =
+          [ newContact "Bobby Tables" "bobby@example.com"    "01 234 5678",
+            newContact "Molly Apples" "molly@example.com"    "01 789 2340",
+            newContact "Elroy Bacon"  "el_bacon@example.com" "01 398 7654"
+          ]
+      }
+    ```
+
+  3. Now we pass that initialModel in to our View when we call it
+
+    ```elm
+    main =
+      view initialModel
+    ```
+
+  4. Then pass the initialModel's contacts list through the the contactList View
+
+    ```elm
+    contactList contacts =
+      ul [ class "contact-list" ] (List.map contactListItem contacts)
+
+    contactListItem contact =
+    ```
+
+  5. Which then generates a contact View (renamed to contactListItem to prevent confusion) for each of the contacts in the contacts list. Note the we use parentheses again to denote the `List.map` gets called first. This will return a List (hence why we don't need to surround the result in square brackets) of contactListItem Views with the current contact information filled in.
+  6. What we have now moved towards is a more declarative way of describing the application. The View code just states how the current model will be rendered to the browser. The initialModel describes the state in which the application will start.
