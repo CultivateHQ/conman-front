@@ -66,3 +66,56 @@
     view =
       Html.text "Hello, world"
     ```
+
+
+## 3. Introducing Elm HTML
+
+1. Change the View code to look like the following
+
+    ```elm
+    module ConMan where
+
+    import Html
+    import Html.Attributes
+
+    main =
+      view
+
+
+    -- VIEW
+
+    view =
+      Html.div [ Html.Attributes.class "container" ]
+      [
+        Html.h1 [ ] [ Html.text "Conman" ]
+      ]
+    ```
+
+2. Getting a bit tedious now to add the Html and Html.Attributes calls everywhere. Going to start getting noisy, so let's clean that up.
+
+    ```elm
+    module ConMan where
+
+    import Html exposing (div, h1, text)
+    import Html.Attributes exposing (class)
+
+    main =
+      view
+
+
+    -- VIEW
+
+    view =
+      div [ class "container" ]
+      [
+        h1 [ ] [ text "Conman" ]
+      ]
+    ```
+
+3. We don't want to have to call out every Html element or attribute though, so we can do better than this
+
+    ```elm
+    import Html exposing (..)
+    import Html.Attributes exposing (..)
+    ```
+

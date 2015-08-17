@@ -1,6 +1,7 @@
 module ConMan where
 
-import Html
+import Html exposing (..)
+import Html.Attributes exposing (..)
 
 main =
   view
@@ -9,4 +10,7 @@ main =
 -- VIEW
 
 view =
-  Html.text "Hello, world"
+  div [ class "container" ]
+  [
+    h1 [ ] [ text "Conman" ]
+  ]
