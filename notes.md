@@ -21,28 +21,48 @@
 7. `elm package install evancz/elm-html 3.0.0`
 8. Add an `index.html` file with the following in it.
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>ConMan - Contact Manager</title>
-    <script src="scripts/conman.js"></script>
-  </head>
-  <body>
-    <script type="text/javascript">
-      var app = Elm.fullscreen(Elm.ConMan);
-    </script>
-  </body>
-</html>
-```
+    ```html
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>ConMan - Contact Manager</title>
+        <script src="scripts/conman.js"></script>
+      </head>
+      <body>
+        <script type="text/javascript">
+          var app = Elm.fullscreen(Elm.ConMan);
+        </script>
+      </body>
+    </html>
+    ```
 
 9. `elm make --output scripts/conman.js ConMan.elm`
 10. Now run a simple web server on the root of the project (i.e. `python -m SimpleHTTPServer`) and point your browser at [http://localhost:8000](http://localhost:8000) (or wherever your server is running).
 11. If you're using git (or similar) then be sure to
 
-```bash
-git init
-echo elm-stuff > .gitignore
-git add .
-git commit -m "Initial commit"
-```
+    ```bash
+    git init
+    echo elm-stuff > .gitignore
+    git add .
+    git commit -m "Initial commit"
+    ```
+
+
+## 2. Introducing Views
+
+1. Change the code to
+
+    ```elm
+    module ConMan where
+
+    import Html
+
+    main =
+      view
+
+
+    -- VIEW
+
+    view =
+      Html.text "Hello, world"
+    ```

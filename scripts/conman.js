@@ -802,9 +802,11 @@ Elm.ConMan.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
-   var main = $Html.text("Hello, world");
+   var view = $Html.text("Hello, world");
+   var main = view;
    _elm.ConMan.values = {_op: _op
-                        ,main: main};
+                        ,main: main
+                        ,view: view};
    return _elm.ConMan.values;
 };
 Elm.Debug = Elm.Debug || {};
