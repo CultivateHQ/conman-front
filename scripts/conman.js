@@ -803,42 +803,67 @@ Elm.ConMan.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
-   var contact = F2(function (name,
-   email) {
-      return A2($Html.div,
-      _L.fromArray([]),
+   var contact = function (contact) {
+      return A2($Html.li,
+      _L.fromArray([$Html$Attributes.$class("contact-list__contact")]),
       _L.fromArray([A2($Html.h2,
-                   _L.fromArray([]),
-                   _L.fromArray([$Html.text(name)]))
+                   _L.fromArray([$Html$Attributes.$class("contact-list__contact__name")]),
+                   _L.fromArray([$Html.text(contact.name)]))
                    ,A2($Html.div,
-                   _L.fromArray([]),
+                   _L.fromArray([$Html$Attributes.$class("contact-list__contact__email")]),
                    _L.fromArray([A2($Html.label,
                                 _L.fromArray([]),
                                 _L.fromArray([$Html.text("Email:")]))
                                 ,A2($Html.a,
                                 _L.fromArray([$Html$Attributes.href(A2($Basics._op["++"],
                                 "mailto:",
-                                email))]),
-                                _L.fromArray([$Html.text(email)]))]))]));
+                                contact.email))]),
+                                _L.fromArray([$Html.text(contact.email)]))]))
+                   ,A2($Html.div,
+                   _L.fromArray([$Html$Attributes.$class("contact-list__contact__phone")]),
+                   _L.fromArray([A2($Html.label,
+                                _L.fromArray([]),
+                                _L.fromArray([$Html.text("Phone:")]))
+                                ,A2($Html.a,
+                                _L.fromArray([$Html$Attributes.href(A2($Basics._op["++"],
+                                "tel:",
+                                contact.phone))]),
+                                _L.fromArray([$Html.text(contact.phone)]))]))]));
+   };
+   var newContact = F3(function (name,
+   email,
+   phone) {
+      return {_: {}
+             ,email: email
+             ,name: name
+             ,phone: phone};
    });
+   var contactList = A2($Html.ul,
+   _L.fromArray([$Html$Attributes.$class("contact-list")]),
+   _L.fromArray([contact(A3(newContact,
+                "Bobby Tables",
+                "bobby@example.com",
+                "01 234 5678"))
+                ,contact(A3(newContact,
+                "Molly Apples",
+                "molly@example.com",
+                "01 789 2340"))
+                ,contact(A3(newContact,
+                "Elroy Bacon",
+                "el_bacon@example.com",
+                "01 398 7654"))]));
    var view = A2($Html.div,
    _L.fromArray([$Html$Attributes.$class("container")]),
    _L.fromArray([A2($Html.h1,
                 _L.fromArray([]),
                 _L.fromArray([$Html.text("Conman")]))
-                ,A2(contact,
-                "Bobby Tables",
-                "bobby@example.com")
-                ,A2(contact,
-                "Molly Apples",
-                "molly@example.com")
-                ,A2(contact,
-                "Elroy Bacon",
-                "el_bacon@example.com")]));
+                ,contactList]));
    var main = view;
    _elm.ConMan.values = {_op: _op
                         ,main: main
+                        ,newContact: newContact
                         ,view: view
+                        ,contactList: contactList
                         ,contact: contact};
    return _elm.ConMan.values;
 };
