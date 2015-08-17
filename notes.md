@@ -119,3 +119,80 @@
     import Html.Attributes exposing (..)
     ```
 
+
+## 4. Adding a contact
+
+1. Change the View to the following
+
+    ```elm
+    view =
+      div [ ]
+      [
+        h1 [ ] [ text "Conman" ],
+
+        h2 [ ] [ text "Bobby Tables" ],
+        div [ ]
+        [
+          label [ ] [ text "Email:" ],
+          a [ href "mailto:bobby@example.com" ] [ text "bobby@example.com" ]
+        ]
+      ]
+    ```
+
+2. This is fine whilst we only have one contact, but it's going to start getting messy pretty soon. Let's start by extracting a contact View.
+
+    ```elm
+    view =
+      div [ class "container" ]
+      [
+        h1 [ ] [ text "Conman" ],
+        contact
+      ]
+
+
+    contact =
+      div [ ] [
+        h2 [ ] [ text "Bobby Tables" ],
+        div [ ]
+        [
+          label [ ] [ text "Email:" ],
+          a [ href "mailto:bobby@example.com" ] [ text "bobby@example.com" ]
+        ]
+      ]
+    ```
+
+3. Now let's pass in the contact details so that we can re-use the contact View
+
+    ```elm
+    view =
+      div [ class "container" ]
+      [
+        h1 [ ] [ text "Conman" ],
+        contact "Bobby Tables" "bobby@example.com"
+      ]
+
+
+    contact name email =
+      div [ ] [
+        h2 [ ] [ text name ],
+        div [ ]
+        [
+          label [ ] [ text "Email:" ],
+          a [ href ("mailto:" ++ email) ] [ text email ]
+        ]
+      ]
+    ```
+
+4. And now let's re-use the contact View
+
+    ```elm
+    view =
+      div [ class "container" ]
+      [
+        h1 [ ] [ text "Conman" ],
+        contact "Bobby Tables" "bobby@example.com",
+        contact "Molly Apples" "molly@example.com",
+        contact "Elroy Bacon" "el_bacon@example.com"
+      ]
+    ```
+

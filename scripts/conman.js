@@ -803,15 +803,43 @@ Elm.ConMan.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
+   var contact = F2(function (name,
+   email) {
+      return A2($Html.div,
+      _L.fromArray([]),
+      _L.fromArray([A2($Html.h2,
+                   _L.fromArray([]),
+                   _L.fromArray([$Html.text(name)]))
+                   ,A2($Html.div,
+                   _L.fromArray([]),
+                   _L.fromArray([A2($Html.label,
+                                _L.fromArray([]),
+                                _L.fromArray([$Html.text("Email:")]))
+                                ,A2($Html.a,
+                                _L.fromArray([$Html$Attributes.href(A2($Basics._op["++"],
+                                "mailto:",
+                                email))]),
+                                _L.fromArray([$Html.text(email)]))]))]));
+   });
    var view = A2($Html.div,
    _L.fromArray([$Html$Attributes.$class("container")]),
    _L.fromArray([A2($Html.h1,
-   _L.fromArray([]),
-   _L.fromArray([$Html.text("Conman")]))]));
+                _L.fromArray([]),
+                _L.fromArray([$Html.text("Conman")]))
+                ,A2(contact,
+                "Bobby Tables",
+                "bobby@example.com")
+                ,A2(contact,
+                "Molly Apples",
+                "molly@example.com")
+                ,A2(contact,
+                "Elroy Bacon",
+                "el_bacon@example.com")]));
    var main = view;
    _elm.ConMan.values = {_op: _op
                         ,main: main
-                        ,view: view};
+                        ,view: view
+                        ,contact: contact};
    return _elm.ConMan.values;
 };
 Elm.Debug = Elm.Debug || {};
