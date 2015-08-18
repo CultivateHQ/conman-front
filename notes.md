@@ -365,3 +365,58 @@
 
   5. Which then generates a contact View (renamed to contactListItem to prevent confusion) for each of the contacts in the contacts list. Note the we use parentheses again to denote the `List.map` gets called first. This will return a List (hence why we don't need to surround the result in square brackets) of contactListItem Views with the current contact information filled in.
   6. What we have now moved towards is a more declarative way of describing the application. The View code just states how the current model will be rendered to the browser. The initialModel describes the state in which the application will start.
+
+
+
+## 7. Building a Phoenix data API to serve contact data
+
+  1. To make things a little more interesting, let's bring the initial contact list in from an external service. In this instance from a simple Phoenix data API that we're about to build.
+  2. Move to the folder where you want to create your Phoenix app and then `mix Phoenix.new conman_data`
+  3. Now `cd conman_data` and create the necessary database structure by typing `mix ecto.create`.
+  4. You can test that everything is going to plan by running `mix test` to run the test suite. You should have 4 passing tests.
+  5. Creating a data API for our contacts is very easy thanks to Phoenix's generators. Let's do this now as follows:
+
+    ```elixir
+    mix phoenix.gen.json Contact contacts name:string email:string phone:string
+    mix ecto.migrate
+    ```
+
+  6. And then open up our favourite editor and change the last block in our `web/router.ex` file to read
+
+    ```elixir
+    scope "/api", ConmanData do
+      pipe_through :api
+
+      resources "/contacts", ContactController
+    end
+    ```
+
+  7. We can check that we haven't broken anything by running `mix test` again. This time we should have 14 passing tests.
+  8. Now we can check the fruits of our labour in the browser by running `iex -S mix Phoenix.server` and then visiting [http://localhost:4000/api/contacts](http://localhost:4000/api/contacts). You should see a JSON response with an empty data array.
+  9. The easiest way to get the existing contact data into our API is to use the repl. Go back to the terminal window where your server is running and hit the enter key to get a repl prompt. Add the contact data as follows:
+
+    ```elixir
+    bobby = %ConmanData.Contact{name: "Bobby Tables", email: "bobby@example.com", phone: "01 234 5678"}
+    ConmanData.Repo.insert(bobby)
+    molly = %ConmanData.Contact{name: "Molly Apples", email: "molly@example.com", phone: "01 789 2340"}
+    ConmanData.Repo.insert(molly)
+    elroy = %ConmanData.Contact{name: "Elroy Bacon", email: "el_bacon@example.com", phone: "01 398 7654"}
+    ConmanData.Repo.insert(elroy)
+    ```
+
+  10. Now if we go back to our browser and refresh we should see that we have 3 contacts now ... only all we can see is their IDs! We can fix this by opening up `web/views/contact_view.ex` in our editor and changing `render ("contact.json" ...` function definition to the following:
+
+    ```elixir
+    def render("contact.json", %{contact: contact}) do
+      %{
+        id: contact.id,
+        name: contact.name,
+        email: contact.email,
+        phone: contact.phone
+      }
+    end
+    ```
+
+  11. Refresh the browser again and you should see the contact list as JSON \o/
+
+
