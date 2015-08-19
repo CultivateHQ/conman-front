@@ -420,3 +420,31 @@
   11. Refresh the browser again and you should see the contact list as JSON \o/
 
 
+## 8. Changing the entire app to use the new StartApp with Effects workflow
+
+1. Rather than try to explain this here, just check the commit that this line is part of ;)
+2. I'll delve into what is happening here when I come to wrote the post itself
+3. Also looks like I might have to reverse engineer the rest of the blog post to suit this otherwise it'll be confusing as all hell.
+
+
+## 9. Setting up CORS in Phoenix
+
+1. If we try to do the above, we'll get a CORS error. To add CORS support to our Phoenix app, we can do as follows.
+2. In `mix.exs`
+
+  ```elixir
+  defp deps do
+    [...,
+     {:cors_plug, "~> 0.1.3"},
+     ...]
+  end
+  ```
+
+2. In `router.ex`
+
+  ```elixir
+  pipeline :api do
+    plug :accepts, ["json"]
+    plug CORSPlug
+  end
+  ```
