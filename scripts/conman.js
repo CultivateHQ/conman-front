@@ -785,160 +785,6 @@ Elm.Color.make = function (_elm) {
                        ,darkGray: darkGray};
    return _elm.Color.values;
 };
-Elm.ConMan = Elm.ConMan || {};
-Elm.ConMan.make = function (_elm) {
-   "use strict";
-   _elm.ConMan = _elm.ConMan || {};
-   if (_elm.ConMan.values)
-   return _elm.ConMan.values;
-   var _op = {},
-   _N = Elm.Native,
-   _U = _N.Utils.make(_elm),
-   _L = _N.List.make(_elm),
-   $moduleName = "ConMan",
-   $Basics = Elm.Basics.make(_elm),
-   $Effects = Elm.Effects.make(_elm),
-   $Html = Elm.Html.make(_elm),
-   $Html$Attributes = Elm.Html.Attributes.make(_elm),
-   $Http = Elm.Http.make(_elm),
-   $Json$Decode = Elm.Json.Decode.make(_elm),
-   $List = Elm.List.make(_elm),
-   $Maybe = Elm.Maybe.make(_elm),
-   $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm),
-   $StartApp = Elm.StartApp.make(_elm),
-   $Task = Elm.Task.make(_elm);
-   var contactListItem = function (contact) {
-      return A2($Html.li,
-      _L.fromArray([$Html$Attributes.$class("contact-list__contact")]),
-      _L.fromArray([A2($Html.h2,
-                   _L.fromArray([$Html$Attributes.$class("contact-list__contact__name")]),
-                   _L.fromArray([$Html.text(contact.name)]))
-                   ,A2($Html.div,
-                   _L.fromArray([$Html$Attributes.$class("contact-list__contact__email")]),
-                   _L.fromArray([A2($Html.span,
-                                _L.fromArray([]),
-                                _L.fromArray([$Html.text("Email:")]))
-                                ,A2($Html.a,
-                                _L.fromArray([$Html$Attributes.href(A2($Basics._op["++"],
-                                "mailto:",
-                                contact.email))]),
-                                _L.fromArray([$Html.text(contact.email)]))]))
-                   ,A2($Html.div,
-                   _L.fromArray([$Html$Attributes.$class("contact-list__contact__phone")]),
-                   _L.fromArray([A2($Html.span,
-                                _L.fromArray([]),
-                                _L.fromArray([$Html.text("Phone:")]))
-                                ,A2($Html.a,
-                                _L.fromArray([$Html$Attributes.href(A2($Basics._op["++"],
-                                "tel:",
-                                contact.phone))]),
-                                _L.fromArray([$Html.text(contact.phone)]))]))]));
-   };
-   var contactList = function (contacts) {
-      return A2($Html.ul,
-      _L.fromArray([$Html$Attributes.$class("contact-list")]),
-      A2($List.map,
-      contactListItem,
-      contacts));
-   };
-   var view = F2(function (address,
-   model) {
-      return A2($Html.div,
-      _L.fromArray([$Html$Attributes.$class("container")]),
-      _L.fromArray([A2($Html.h1,
-                   _L.fromArray([]),
-                   _L.fromArray([$Html.text("Conman")]))
-                   ,contactList(model.contacts)]));
-   });
-   var RefreshContacts = function (a) {
-      return {ctor: "RefreshContacts"
-             ,_0: a};
-   };
-   var Model = function (a) {
-      return {_: {},contacts: a};
-   };
-   var update = F2(function (action,
-   model) {
-      return function () {
-         switch (action.ctor)
-         {case "RefreshContacts":
-            return {ctor: "_Tuple2"
-                   ,_0: Model(A2($Maybe.withDefault,
-                   _L.fromArray([]),
-                   action._0))
-                   ,_1: $Effects.none};}
-         _U.badCase($moduleName,
-         "between lines 67 and 71");
-      }();
-   });
-   var newContact = F3(function (name,
-   email,
-   phone) {
-      return {_: {}
-             ,email: email
-             ,name: name
-             ,phone: phone};
-   });
-   var decodeContacts = function () {
-      var contact = A4($Json$Decode.object3,
-      F3(function (name,email,phone) {
-         return A3(newContact,
-         name,
-         email,
-         phone);
-      }),
-      A2($Json$Decode._op[":="],
-      "name",
-      $Json$Decode.string),
-      A2($Json$Decode._op[":="],
-      "email",
-      $Json$Decode.string),
-      A2($Json$Decode._op[":="],
-      "phone",
-      $Json$Decode.string));
-      return A2($Json$Decode._op[":="],
-      "data",
-      $Json$Decode.list(contact));
-   }();
-   var fetchContacts = $Effects.task($Task.map(RefreshContacts)($Task.toMaybe(A2($Http.get,
-   decodeContacts,
-   "http://localhost:4000/api/contacts"))));
-   var init = {ctor: "_Tuple2"
-              ,_0: Model(_L.fromArray([]))
-              ,_1: fetchContacts};
-   var Contact = F3(function (a,
-   b,
-   c) {
-      return {_: {}
-             ,email: b
-             ,name: a
-             ,phone: c};
-   });
-   var app = $StartApp.start({_: {}
-                             ,init: init
-                             ,inputs: _L.fromArray([])
-                             ,update: update
-                             ,view: view});
-   var main = app.html;
-   var tasks = Elm.Native.Task.make(_elm).performSignal("tasks",
-   app.tasks);
-   _elm.ConMan.values = {_op: _op
-                        ,app: app
-                        ,main: main
-                        ,Contact: Contact
-                        ,newContact: newContact
-                        ,Model: Model
-                        ,init: init
-                        ,RefreshContacts: RefreshContacts
-                        ,update: update
-                        ,view: view
-                        ,contactList: contactList
-                        ,contactListItem: contactListItem
-                        ,fetchContacts: fetchContacts
-                        ,decodeContacts: decodeContacts};
-   return _elm.ConMan.values;
-};
 Elm.Debug = Elm.Debug || {};
 Elm.Debug.make = function (_elm) {
    "use strict";
@@ -4632,6 +4478,160 @@ Elm.List.make = function (_elm) {
                       ,sortBy: sortBy
                       ,sortWith: sortWith};
    return _elm.List.values;
+};
+Elm.Main = Elm.Main || {};
+Elm.Main.make = function (_elm) {
+   "use strict";
+   _elm.Main = _elm.Main || {};
+   if (_elm.Main.values)
+   return _elm.Main.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Main",
+   $Basics = Elm.Basics.make(_elm),
+   $Effects = Elm.Effects.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Http = Elm.Http.make(_elm),
+   $Json$Decode = Elm.Json.Decode.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $StartApp = Elm.StartApp.make(_elm),
+   $Task = Elm.Task.make(_elm);
+   var contactListItem = function (contact) {
+      return A2($Html.li,
+      _L.fromArray([$Html$Attributes.$class("contact-list__contact")]),
+      _L.fromArray([A2($Html.h2,
+                   _L.fromArray([$Html$Attributes.$class("contact-list__contact__name")]),
+                   _L.fromArray([$Html.text(contact.name)]))
+                   ,A2($Html.div,
+                   _L.fromArray([$Html$Attributes.$class("contact-list__contact__email")]),
+                   _L.fromArray([A2($Html.span,
+                                _L.fromArray([]),
+                                _L.fromArray([$Html.text("Email:")]))
+                                ,A2($Html.a,
+                                _L.fromArray([$Html$Attributes.href(A2($Basics._op["++"],
+                                "mailto:",
+                                contact.email))]),
+                                _L.fromArray([$Html.text(contact.email)]))]))
+                   ,A2($Html.div,
+                   _L.fromArray([$Html$Attributes.$class("contact-list__contact__phone")]),
+                   _L.fromArray([A2($Html.span,
+                                _L.fromArray([]),
+                                _L.fromArray([$Html.text("Phone:")]))
+                                ,A2($Html.a,
+                                _L.fromArray([$Html$Attributes.href(A2($Basics._op["++"],
+                                "tel:",
+                                contact.phone))]),
+                                _L.fromArray([$Html.text(contact.phone)]))]))]));
+   };
+   var contactList = function (contacts) {
+      return A2($Html.ul,
+      _L.fromArray([$Html$Attributes.$class("contact-list")]),
+      A2($List.map,
+      contactListItem,
+      contacts));
+   };
+   var view = F2(function (address,
+   model) {
+      return A2($Html.div,
+      _L.fromArray([$Html$Attributes.$class("container")]),
+      _L.fromArray([A2($Html.h1,
+                   _L.fromArray([]),
+                   _L.fromArray([$Html.text("Conman")]))
+                   ,contactList(model.contacts)]));
+   });
+   var RefreshContacts = function (a) {
+      return {ctor: "RefreshContacts"
+             ,_0: a};
+   };
+   var Model = function (a) {
+      return {_: {},contacts: a};
+   };
+   var update = F2(function (action,
+   model) {
+      return function () {
+         switch (action.ctor)
+         {case "RefreshContacts":
+            return {ctor: "_Tuple2"
+                   ,_0: Model(A2($Maybe.withDefault,
+                   _L.fromArray([]),
+                   action._0))
+                   ,_1: $Effects.none};}
+         _U.badCase($moduleName,
+         "between lines 67 and 71");
+      }();
+   });
+   var newContact = F3(function (name,
+   email,
+   phone) {
+      return {_: {}
+             ,email: email
+             ,name: name
+             ,phone: phone};
+   });
+   var decodeContacts = function () {
+      var contact = A4($Json$Decode.object3,
+      F3(function (name,email,phone) {
+         return A3(newContact,
+         name,
+         email,
+         phone);
+      }),
+      A2($Json$Decode._op[":="],
+      "name",
+      $Json$Decode.string),
+      A2($Json$Decode._op[":="],
+      "email",
+      $Json$Decode.string),
+      A2($Json$Decode._op[":="],
+      "phone",
+      $Json$Decode.string));
+      return A2($Json$Decode._op[":="],
+      "data",
+      $Json$Decode.list(contact));
+   }();
+   var fetchContacts = $Effects.task($Task.map(RefreshContacts)($Task.toMaybe(A2($Http.get,
+   decodeContacts,
+   "http://localhost:4000/api/contacts"))));
+   var init = {ctor: "_Tuple2"
+              ,_0: Model(_L.fromArray([]))
+              ,_1: fetchContacts};
+   var Contact = F3(function (a,
+   b,
+   c) {
+      return {_: {}
+             ,email: b
+             ,name: a
+             ,phone: c};
+   });
+   var app = $StartApp.start({_: {}
+                             ,init: init
+                             ,inputs: _L.fromArray([])
+                             ,update: update
+                             ,view: view});
+   var main = app.html;
+   var tasks = Elm.Native.Task.make(_elm).performSignal("tasks",
+   app.tasks);
+   _elm.Main.values = {_op: _op
+                      ,app: app
+                      ,main: main
+                      ,Contact: Contact
+                      ,newContact: newContact
+                      ,Model: Model
+                      ,init: init
+                      ,RefreshContacts: RefreshContacts
+                      ,update: update
+                      ,view: view
+                      ,contactList: contactList
+                      ,contactListItem: contactListItem
+                      ,fetchContacts: fetchContacts
+                      ,decodeContacts: decodeContacts};
+   return _elm.Main.values;
 };
 Elm.Maybe = Elm.Maybe || {};
 Elm.Maybe.make = function (_elm) {
